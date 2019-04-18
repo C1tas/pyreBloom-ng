@@ -56,8 +56,9 @@ target/
 #Ipython Notebook
 .ipynb_checkpoints
 
-# IntelliJ IDEA
+# editors  IntelliJ IDEA
 .idea/
+.vscode/
 
 # Generated C code
 pyreBloom/pyreBloom.c

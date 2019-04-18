@@ -1,9 +1,11 @@
 pyreBloom-ng
 ============
 
+
 | Python library which implements a Redis-backed Bloom filter.
 | This is a fork of `pyreBloom <https://github.com/seomoz/pyreBloom>`_, but a bit faster, has a better API and supports Python 2.6+, 3.3+, PyPy 2 and PyPy 3.
 
+| This repo fork from <https://github.com/leovp/pyreBloom-ng> but change a litte for use and guide|
 Installation
 ------------
 
@@ -25,7 +27,7 @@ Install hiredis:
 Install the latest stable library version:
 ::
 
-    pip install pyreBloom-ng
+    pip install git+https://github.com/C1tas/pyreBloom-ng
 
 Instantiate a pyreBloom filter, giving it a redis key prefix, a capacity, and an error rate:
 ::
@@ -37,10 +39,19 @@ Instantiate a pyreBloom filter, giving it a redis key prefix, a capacity, and an
     f = PyreBloom(b'key_prefix', 10000, 0.01)
 
     # You can find out how many bits this will theoretically consume
-    p.bits
+    f.bits
 
     # And how many hashes are needed to satisfy the false positive rate
-    p.hashes
+    f.hashes
+
+Test
+::
+    f.add(b'http://asd.com')
+    # True
+    b'http://asd.com' in f
+    # True
+    b'http://asd.com/1' in f
+    # False
 
 Easily add data to a filter using a set-like interface:
 ::
@@ -74,4 +85,4 @@ License
 
 Both ``pyreBloom`` and ``pyreBloom-ng`` are distributed under the terms of the MIT license.
 
-See the bundled `LICENSE <https://github.com/leovp/pyreBloom-ng/blob/master/LICENSE>`_ file for more details.
+See the bundled `LICENSE <https://github.com/C1tas/pyreBloom-ng/blob/master/LICENSE>`_ file for more details.

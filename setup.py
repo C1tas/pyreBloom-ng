@@ -1,53 +1,60 @@
+import Cython
 import setuptools
-from pip.req import parse_requirements
-from pip.download import PipSession
-
-ext_files = ['pyreBloom/bloom.c']
-
-kwargs = {}
+from distutils.core import setup
+from distutils.extension import Extension
+from Cython.Build import cythonize
 
 try:
-    from Cython.Distutils import build_ext
-    from Cython.Distutils import Extension
+    # pip > 10
+    from pip._internal import parse_command, download
+    from pip._internal.req import parse_requirements
 
-    print('Building from Cython')
-    ext_files.append('pyreBloom/pyreBloom.pyx')
-    kwargs['cmdclass'] = {'build_ext': build_ext}
-except ImportError:
-    from distutils.core import Extension
+except Exception as e:
+    # pip < 10
+    from pip import parse_command, download
+    from pip.req import parse_requirements
+    
 
-    ext_files.append('pyreBloom/pyreBloom.c')
-    print('Building from C')
-
-ext_modules = [Extension("pyreBloom", ext_files, libraries=['hiredis'],
-                         library_dirs=['/usr/local/lib'],
-                         include_dirs=['/usr/local/include'],
-                         extra_compile_args=['-std=c99'])]
+extensions = [
+    Extension("pyreBloom", ["pyreBloom/bloom.c", "pyreBloom/pyreBloom.pyx", ],
+        libraries=['hiredis'],
+        library_dirs=['/usr/local/lib'],
+        include_dirs=['/usr/local/include'],
+        extra_compile_args=['-std=c99']
+    )
+]
+# setup(
+#     name="pyreBloom-ng",
+#     # extensions=extensions,
+#     version = '0.0.1',
+#     ext_modules=extensions,
+#     cmdclass={'build_ext': Cython.Build.build_ext},
+# )
 
 setuptools.setup(
     name='pyreBloom-ng',
     version='0.0.1',
-    url='https://github.com/leovp/pyreBloom-ng',
+    url='https://github.com/C1tas/pyreBloom-ng',
     license='MIT',
 
-    author='Leonid Runyshkin',
-    author_email='runyshkin@gmail.com',
+    author='C1tas',
+    author_email='wangyuhengs@outlook.com',
 
-    keywords='bloom filter redis',
+    keywords='bloom filter redis python3.7',
     description='Python library which implements a Redis-backed Bloom filter.',
     # long_description=read('README.rst'),
 
     platforms=['any'],
-    ext_modules=ext_modules,
+    ext_modules=extensions,
 
     install_requires=[
         str(req.req) for req in parse_requirements('requirements.txt',
-                                                   session=PipSession())
+                                                   session=download.PipSession())
         ],
 
     tests_require=[
         str(req.req) for req in parse_requirements('requirements_test.txt',
-                                                   session=PipSession())
+                                                   session=download.PipSession())
         ],
 
     classifiers=[
@@ -68,5 +75,6 @@ setuptools.setup(
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.7',
     ],
 )
