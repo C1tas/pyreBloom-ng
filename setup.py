@@ -77,4 +77,5 @@ setuptools.setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.7',
     ],
+    cmdclass={'build_ext': Cython.Build.build_ext},
 )
