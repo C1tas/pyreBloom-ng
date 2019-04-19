@@ -74,7 +74,7 @@ package_data = {
 }
 
 # Add compiler specific options.
-set_compiler_options(package_root, ext_modules)
+# set_compiler_options(package_root, ext_modules)
 
 # By doing this we need to change version information in a single file
 with open(os.path.join("src", package_root, "__init__.py")) as init_root:
