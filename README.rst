@@ -26,7 +26,7 @@ Install hiredis:
 
 Install the latest stable library version:
 ::
-
+    pip install Cython
     pip install git+https://github.com/C1tas/pyreBloom-ng
 
 Instantiate a pyreBloom filter, giving it a redis key prefix, a capacity, and an error rate:
