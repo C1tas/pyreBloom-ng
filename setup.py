@@ -50,7 +50,7 @@ except Exception as e:
     from pip.req import parse_requirements
 
 ext_modules = [
-    Extension("pyreBloom", ["lib/pyreBloom/bloom.c", "lib/pyreBloom/pyreBloom.pyx", ],
+    Extension("pyreBloom", ["clib/pyreBloom/bloom.c", "clib/pyreBloom/pyreBloom.pyx", ],
               libraries=['hiredis'],
               library_dirs=['/usr/local/lib'],
               include_dirs=['/usr/local/include'],
@@ -77,7 +77,8 @@ package_data = {
 # set_compiler_options(package_root, ext_modules)
 
 # By doing this we need to change version information in a single file
-with open(os.path.join("src", package_root, "__init__.py")) as init_root:
+pysrc_root = "pysrc"
+with open(os.path.join(pysrc_root, package_root, "__init__.py")) as init_root:
     for line in init_root:
         if line.startswith("version_info"):
             version_tuple = eval(line.split("=")[1])
@@ -100,7 +101,7 @@ setup(
     platforms='Posix; MacOS X; Windows',
     zip_safe=False,
     packages=packages,
-    package_dir={"": "src"},
+    package_dir={"": pysrc_root},
     package_data=package_data,
     ext_modules=ext_modules,
     # py_modules=['pyreBloom'],
