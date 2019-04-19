@@ -100,9 +100,9 @@ setup(
     # long_description=read('README.rst'),
     platforms='Posix; MacOS X; Windows',
     zip_safe=False,
-    packages=packages,
+    # packages=packages,
     # package_dir={"": pysrc_root},
-    package_data=package_data,
+    # package_data=package_data,
     ext_modules=ext_modules,
     # py_modules=['pyreBloom'],
     # install_requires=[
