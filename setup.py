@@ -101,7 +101,7 @@ setup(
     platforms='Posix; MacOS X; Windows',
     zip_safe=False,
     packages=packages,
-    package_dir={"": pysrc_root},
+    # package_dir={"": pysrc_root},
     package_data=package_data,
     ext_modules=ext_modules,
     # py_modules=['pyreBloom'],
